@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis de Necesidades – Fluent with Sena</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #0b1220;
+      color: #ffffff;
+      font-family: 'DM Sans', 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 48px 16px 64px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: #9aa5b4;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      max-width: 520px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #1e2d42;
+      margin: 32px 0;
+    }
+
+    .field {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    label .required {
+      color: #c9a84c;
+      margin-left: 2px;
+    }
+
+    label .optional {
+      color: #6b7a8d;
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      background: #0d1826;
+      border: 1px solid #1a2840;
+      border-radius: 6px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+    }
+
+    input[type="date"] {
+      color-scheme: dark;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #3d5068;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus,
+    input[type="date"]:focus {
+      border-color: #c9a84c;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 96px;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Custom select wrapper */
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap::after {
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #6b7a8d;
+    }
+
+    select option {
+      background: #0d1826;
+      color: #ffffff;
+    }
+
+    /* Goal boxes */
+    .goal-label-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .goal-number {
+      background: #1a2a40;
+      color: #c9a84c;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .goals-section-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 14px;
+    }
+
+    .goals-section-label .required {
+      color: #c9a84c;
+      margin-left: 2px;
+    }
+
+    .goal-item {
+      margin-bottom: 12px;
+    }
+
+    /* Premium gold submit button */
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #c9a84c 0%, #e2c068 40%, #b8922e 100%);
+      color: #0b1220;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 20px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: filter 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 2px 16px rgba(201, 168, 76, 0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .submit-btn:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 4px 24px rgba(201, 168, 76, 0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.99);
+      filter: brightness(0.97);
+    }
+
+    .submit-btn .arrow {
+      font-size: 1rem;
+    }
+
+    /* Confirmation page */
+    .confirm-page {
+      display: none;
+      text-align: center;
+      padding: 64px 24px;
+    }
+
+    .confirm-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c9a84c, #e2c068);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 1.4rem;
+    }
+
+    .confirm-page h2 {
+      color: #ffffff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .confirm-page p {
+      color: #9aa5b4;
+      font-size: 0.95rem;
+      max-width: 420px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .confirm-divider {
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, #c9a84c, #e2c068);
+      margin: 24px auto;
+      border-radius: 2px;
+    }
+
+    /* Error state */
+    input.error, textarea.error, select.error, input[type="date"].error {
+      border-color: #c0392b;
+    }
+
+    .error-msg {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    @media (max-width: 520px) {
+      .row-2 { grid-template-columns: 1fr; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="form-area">
+      <h1>Análisis de necesidades</h1>
+      <p class="subtitle">Tómate unos minutos para completar esto antes de nuestra próxima llamada. Usaré tus respuestas para preparar tu plan personalizado.</p>
+
+      <hr class="divider" />
+
+      <!-- Name -->
+      <div class="field">
+        <label for="name">Nombre completo <span class="required">*</span></label>
+        <input type="text" id="name" required />
+        <div class="error-msg" id="name-err">Por favor ingresa tu nombre.</div>
+      </div>
+
+      <!-- Email + WhatsApp -->
+      <div class="row-2">
+        <div class="field">
+          <label for="email">Correo electrónico <span class="required">*</span></label>
+          <input type="email" id="email" required />
+          <div class="error-msg" id="email-err">Por favor ingresa un correo válido.</div>
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp <span class="required">*</span></label>
+          <input type="tel" id="whatsapp" required />
+          <div class="error-msg" id="whatsapp-err">Por favor ingresa tu número.</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Goals -->
+      <div class="field">
+        <p class="goals-section-label">¿Cuáles son las 3 cosas más importantes que quieres poder hacer en inglés en los próximos 3 meses? <span class="required">*</span></p>
+
+        <div class="goal-item">
+          <div class="goal-label-row">
+            <span class="goal-number">1</span>
+            <label style="margin-bottom:0;" for="goal1">Primera meta</label>
+          </div>
+          <input type="text" id="goal1" required />
+          <div class="error-msg" id="goal1-err">Por favor completa esta meta.</div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-label-row">
+            <span class="goal-number">2</span>
+            <label style="margin-bottom:0;" for="goal2">Segunda meta</label>
+          </div>
+          <input type="text" id="goal2" required />
+          <div class="error-msg" id="goal2-err">Por favor completa esta meta.</div>
+        </div>
+
+        <div class="goal-item">
+          <div class="goal-label-row">
+            <span class="goal-number">3</span>
+            <label style="margin-bottom:0;" for="goal3">Tercera meta</label>
+          </div>
+          <input type="text" id="goal3" required />
+          <div class="error-msg" id="goal3-err">Por favor completa esta meta.</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Professional context -->
+      <div class="field">
+        <label for="context">¿En qué situaciones específicas debemos enfocarnos en tu aprendizaje? <span class="required">*</span></label>
+        <textarea id="context" placeholder="Por ejemplo — entrevistas, llamadas con clientes, presentaciones..." required></textarea>
+        <div class="error-msg" id="context-err">Por favor describe las situaciones.</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Start date + Hours -->
+      <div class="row-2">
+        <div class="field">
+          <label for="start">Fecha de inicio preferida <span class="required">*</span></label>
+          <input type="date" id="start" min="2026-06-01" max="2026-07-31" required />
+          <div class="error-msg" id="start-err">Por favor selecciona una fecha.</div>
+        </div>
+        <div class="field">
+          <label for="hours">Horas semanales disponibles <span class="required">*</span></label>
+          <div class="select-wrap">
+            <select id="hours" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="2">2 horas</option>
+              <option value="3">3 horas</option>
+              <option value="4">4 horas</option>
+            </select>
+          </div>
+          <div class="error-msg" id="hours-err">Por favor selecciona las horas.</div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Anything else -->
+      <div class="field">
+        <label for="extra">¿Hay algo más que quieras que sepa antes de nuestra próxima llamada? <span class="optional">(Opcional)</span></label>
+        <textarea id="extra" placeholder="Contexto adicional, horarios, o cualquier cosa que quieras compartir..."></textarea>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" onclick="handleSubmit()">
+        ENVIAR <span class="arrow">→</span>
+      </button>
+    </div>
+
+    <!-- Confirmation page -->
+    <div class="confirm-page" id="confirm">
+      <div class="confirm-icon">✓</div>
+      <h2>¡Gracias por completar el formulario!</h2>
+      <div class="confirm-divider"></div>
+      <p>Tu información fue recibida. Te enviamos una copia de tus respuestas a tu correo.<br><br>Nos vemos el lunes.</p>
+    </div>
+
+  </div>
+
+  <script>
+    function val(id) { return document.getElementById(id).value.trim(); }
+    function show(id) { document.getElementById(id).style.display = 'block'; }
+    function hide(id) { document.getElementById(id).style.display = 'none'; }
+    function markErr(id, errId) {
+      document.getElementById(id).classList.add('error');
+      show(errId);
+    }
+    function clearErr(id, errId) {
+      document.getElementById(id).classList.remove('error');
+      hide(errId);
+    }
+    function validateEmail(e) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    }
+
+    function handleSubmit() {
+      let valid = true;
+
+      const fields = [
+        { id: 'name',    err: 'name-err',    check: () => val('name') !== '' },
+        { id: 'email',   err: 'email-err',   check: () => validateEmail(val('email')) },
+        { id: 'whatsapp',err: 'whatsapp-err',check: () => val('whatsapp') !== '' },
+        { id: 'goal1',   err: 'goal1-err',   check: () => val('goal1') !== '' },
+        { id: 'goal2',   err: 'goal2-err',   check: () => val('goal2') !== '' },
+        { id: 'goal3',   err: 'goal3-err',   check: () => val('goal3') !== '' },
+        { id: 'context', err: 'context-err', check: () => val('context') !== '' },
+        { id: 'start',   err: 'start-err',   check: () => val('start') !== '' },
+        { id: 'hours',   err: 'hours-err',   check: () => val('hours') !== '' },
+      ];
+
+      fields.forEach(f => {
+        if (f.check()) { clearErr(f.id, f.err); }
+        else { markErr(f.id, f.err); valid = false; }
+      });
+
+      if (!valid) return;
+
+      const payload = {
+        name:     val('name'),
+        email:    val('email'),
+        whatsapp: val('whatsapp'),
+        goal1:    val('goal1'),
+        goal2:    val('goal2'),
+        goal3:    val('goal3'),
+        context:  val('context'),
+        start:    val('start'),
+        hours:    val('hours'),
+        extra:    val('extra'),
+      };
+
+      // Replace with your Make webhook URL
+      const WEBHOOK_URL = 'https://hook.make.com/YOUR_WEBHOOK_URL_HERE';
+
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      .then(() => showConfirm())
+      .catch(() => showConfirm());
+    }
+
+    function showConfirm() {
+      document.getElementById('form-area').style.display = 'none';
+      const c = document.getElementById('confirm');
+      c.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
